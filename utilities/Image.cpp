@@ -11,6 +11,7 @@ Image::Image(int hres, int vres){
     for (int i=0; i<(this->vres); i++)
         colors[i] = new RGBColor[this->hres];
 }
+
 Image::Image(const ViewPlane &vp){
     //Assign hres and vrex from Viewplane
     this->hres = vp.get_hres();
@@ -66,9 +67,9 @@ void Image::write_ppm(std::string path) const{
 
       file
       //Write scaled r,g,b data to ppm file.
-      << std::to_string(this->colors[i][j].r*scale) << " "
-      << std::to_string(this->colors[i][j].g*scale) << " "
-      << std::to_string(this->colors[i][j].b*scale) << " ";
+      << std::to_string(this->colors[j][i].r*scale) << " "
+      << std::to_string(this->colors[j][i].g*scale) << " "
+      << std::to_string(this->colors[j][i].b*scale) << " ";
     }
       file << "\n";
   }

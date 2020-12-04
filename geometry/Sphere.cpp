@@ -1,4 +1,5 @@
 #include "Sphere.hpp"
+#include <iostream>
 #include <cmath>
 
 Sphere::Sphere(){
@@ -35,7 +36,6 @@ bool Sphere::hit(const Ray &ray, float &t, ShadeInfo &s)const{
     double t2 = (-b + sqrt(discrim)) / (2 * a);
 
     float myT;
-
     if(t1 < kEpsilon && t2 < kEpsilon)
     {
         return false;

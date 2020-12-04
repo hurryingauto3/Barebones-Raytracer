@@ -34,7 +34,7 @@ bool Triangle::hit(const Ray &ray, float &t, ShadeInfo &s)const{
     Vector3D v_0 = this->v1 - this->v0;
     Vector3D v_1 = this->v2 - this->v0;
     Vector3D v_2 = v_0^v_1;
-    
+
     double myT = (this->v0 - ray.o) * v_2 / (ray.d * v_2);
 
     if(myT < kEpsilon)
@@ -63,6 +63,7 @@ bool Triangle::hit(const Ray &ray, float &t, ShadeInfo &s)const{
 	    s.ray = ray;
 	    s.t = t;
         s.hit = true;
+        s.material_ptr = this->material_ptr;
 	    return true;
     }
     else

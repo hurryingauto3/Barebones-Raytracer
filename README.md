@@ -4,4 +4,9 @@
 - The project can be viewed here: https://hurryingauto3.github.io/
 
 ### Barebones Raytracer Branch
+- Contains a minimal tracer
 ### More Features Branch
+- Contains additional features
+-- More lighting 
+-- Acceleration Structures [Bounding Volume Heirarchy]
+-- More materials

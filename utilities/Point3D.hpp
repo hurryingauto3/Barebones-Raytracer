@@ -37,7 +37,7 @@ public:
   Point3D operator+(const Vector3D &v) const; // addition of a vector
   Point3D operator-(const Vector3D &v) const; // subtraction of a vector
   Point3D operator*(const float s) const;     // scale the point by a factor, s.
-
+  float operator[](int index) const; //
   // Distance between points.
   float d_squared(const Point3D &p) const; // square of distance
   float distance(const Point3D &p) const;  // distance

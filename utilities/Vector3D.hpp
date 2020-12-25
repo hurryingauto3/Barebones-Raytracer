@@ -53,6 +53,8 @@ public:
   // Vector products.
   double operator*(const Vector3D &b) const;   // dot product.
   Vector3D operator^(const Vector3D &v) const; // cross product.
+
+  int LongestDim();
 };
 
 // Scaling.

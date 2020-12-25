@@ -19,7 +19,7 @@ class Ray;
 class ShadeInfo;
 
 class Geometry {
-protected:
+public:
   Material *material_ptr; // this object's material.
 
 public:
@@ -45,4 +45,5 @@ public:
 
   // Get bounding box.
   virtual BBox getBBox() const = 0;
+  virtual Point3D getCentroid() const = 0;
 };

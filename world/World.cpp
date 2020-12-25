@@ -1,23 +1,32 @@
 #include "World.hpp"
 
-
+#include <iostream>
 World::World()
 {
     this->vplane = ViewPlane();
     this->bg_color = RGBColor();
     this->camera_ptr = nullptr;
     this->sampler_ptr = nullptr;
+    this->acceleration_ptr = nullptr;
 }
 
 
 World::~World()
 {
-    delete camera_ptr;
-    delete sampler_ptr;
     for (unsigned int i = 0; i < geometry.size(); i++)
     {
         delete geometry[i];
     }
+
+    for (unsigned int i = 0; i < lights.size(); i++)
+    {
+        delete lights[i];
+    }
+
+    delete camera_ptr;
+    delete sampler_ptr;
+    delete acceleration_ptr;
+    delete tracer;
 }
 
 
@@ -35,83 +44,48 @@ void World::set_camera(Camera *c_ptr)
 
 ShadeInfo World::hit_objects(const Ray &ray)
 {
-    float t = kHugeValue;
-    ShadeInfo sinfo(*this);
-    for (unsigned int i = 0; i < geometry.size(); i++)
-    {
+//    if (acceleration_ptr != NULL){
+//        ShadeInfo s = acceleration_ptr->hit(ray);
+////        std::cout << s.hit<<std::endl;
+//        return s;
+//    }
 
-        float localT;
-        ShadeInfo localSinfo(*this);
-        bool ifHit = geometry[i]->hit(ray, localT, localSinfo);
-        if (ifHit)
-        {
-            if (localT < t)
-            {
-                t = localT;
-                sinfo = localSinfo;
-            }
+    ShadeInfo s(*this);
+    Material * mPtr = 0;
+    float t;
+//    int index;
+    float tmin = kHugeValue;
+    Vector3D normal;
+    Point3D local_hit;
+    for (unsigned int i = 0; i < geometry.size(); i++){
+        if (geometry[i]->hit(ray, t, s) && (t < tmin)){
+//              sFinal = s;
+//            std::cout << geometry[i]->material_ptr << " ";
+            s.hit = true;
+            tmin = t;
+            mPtr = geometry[i]->get_material();
+            normal = s.normal;
+            local_hit = s.hit_point;
+//            index = i;
         }
     }
+    if (s.hit){
+        s.t = tmin;
+        s.normal = normal;
+        s.hit_point = local_hit;
+        s.material_ptr = mPtr;
+    }
 
-    return sinfo;
+//    std::cout << index << " " << s.material_ptr << std::endl;
+
+    return s;
 }
 
+void World::set_acceleration(Acceleration* a_ptr){
+    this->acceleration_ptr = a_ptr;
+}
 
-
-///**
-//   This builds a simple scene that consists of a sphere, a triangle, and a
-//   plane.
-//   Parallel viewing is used with a single sample per pixel.
-//*/
-//
-// #include "../cameras/Perspective.hpp"
-//
-// #include "../geometry/Plane.hpp"
-// #include "../geometry/Sphere.hpp"
-// #include "../geometry/Triangle.hpp"
-//
-// #include "../materials/Cosine.hpp"
-//
-// #include "../samplers/Simple.hpp"
-//
-// #include "../utilities/Constants.hpp"
-//
-// #include "../world/World.hpp"
-//
-//void
-//World::build(void) {
-//  // View plane  .
-//  vplane.top_left.x = -10;
-//  vplane.top_left.y = 10;
-//  vplane.top_left.z = 10;
-//  vplane.bottom_right.x = 10;
-//  vplane.bottom_right.y = -10;
-//  vplane.bottom_right.z = 10;
-//  vplane.hres = 400;
-//  vplane.vres = 400;
-//
-//  // Background color.
-//  bg_color = black;
-//
-//  // Camera and sampler.
-//  set_camera(new Perspective(0, 0, 20));
-//  sampler_ptr = new Simple(camera_ptr, &vplane);
-//
-//  // sphere
-//  Sphere* sphere_ptr = new Sphere(Point3D(-3, 2, 0), 5);
-//  sphere_ptr->set_material(new Cosine(red));
-//  add_geometry(sphere_ptr);
-//
-//  // triangle
-//  Point3D a(2.5, -5, 1);
-//  Point3D b(14, -1, 0);
-//  Point3D c(8.5, 5, 0.5);
-//  Triangle* triangle_ptr = new Triangle(a, b, c);
-//  triangle_ptr->set_material(new Cosine(blue));
-//  add_geometry(triangle_ptr);
-//
-//  // plane
-//  Plane* plane_ptr = new Plane(Point3D(0,1,0), Vector3D(0, 10, 2));
-//  plane_ptr->set_material(new Cosine(green));  // green
-//  add_geometry(plane_ptr);
-//}
+void World::add_light(Light * light_ptr)
+{
+    this->lights.push_back(light_ptr);
+}

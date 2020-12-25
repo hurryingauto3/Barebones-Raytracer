@@ -1,4 +1,6 @@
+#include <stdlib.h>
 #include "Image.hpp"
+#include "Constants.hpp"
 
 Image::Image(int hres, int vres){
     //Assign hres and vrex from parameters
@@ -35,7 +37,7 @@ Image::~Image(){
 }
 
 void Image::set_pixel(int x, int y, const RGBColor& color){
-    this->colors[x][y] = color;
+    this->colors[y][x] = color;
 }
 
 
@@ -60,16 +62,15 @@ void Image::write_ppm(std::string path) const{
   file << 255 << "\n";
 
   //Find scale using maxrgb
-  double scale = 255/maxrgb;
+  double scale = 255/std::max(ONE, maxrgb);
 
   for (int i = 0; i < this->vres; i++){
     for(int j = 0; j < this->hres; j++){
-
       file
       //Write scaled r,g,b data to ppm file.
-      << std::to_string(this->colors[j][i].r*scale) << " "
-      << std::to_string(this->colors[j][i].g*scale) << " "
-      << std::to_string(this->colors[j][i].b*scale) << " ";
+      << std::to_string(this->colors[i][j].r*scale) << " "
+      << std::to_string(this->colors[i][j].g*scale) << " "
+      << std::to_string(this->colors[i][j].b*scale) << " ";
     }
       file << "\n";
   }

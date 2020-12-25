@@ -32,7 +32,7 @@ std::string Triangle::to_string() const{
 bool Triangle::hit(const Ray &ray, float &t, ShadeInfo &s)const{
 
     Vector3D v_0 = this->v1 - this->v0;
-    Vector3D v_1 = this->v2 - this->v0;
+    Vector3D v_1 = this->v2 - this->v1;
     Vector3D v_2 = v_0^v_1;
 
     double myT = (this->v0 - ray.o) * v_2 / (ray.d * v_2);
@@ -74,9 +74,13 @@ bool Triangle::hit(const Ray &ray, float &t, ShadeInfo &s)const{
  }
 
 
-
-
-
-BBox Triangle::getBBox()const{
+BBox Triangle::getBBox() const{
     return BBox(min(v0, min(v1, v2)), max(v0, max(v1, v2)));
+}
+
+Point3D Triangle::getCentroid() const{
+    Point3D center((this->v0.x + this->v1.x + this->v2.x)/3
+                    ,(this->v0.y + this->v1.y + this->v2.y)/3,
+                    (this->v0.z + this->v1.z + this->v2.z)/3);
+    return center;
 }

@@ -49,6 +49,10 @@ bool Plane::hit(const Ray &ray, float &t, ShadeInfo &s) const{
     return true;
 }
 
-BBox Plane::getBBox()const{
+BBox Plane::getBBox() const{
     return BBox();
+}
+
+Point3D Plane::getCentroid() const{
+    return this->a;
 }

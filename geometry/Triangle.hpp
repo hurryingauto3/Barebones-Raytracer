@@ -35,4 +35,5 @@ public:
 
   // Get bounding box.
   virtual BBox getBBox() const override;
+  virtual Point3D getCentroid() const override;
 };

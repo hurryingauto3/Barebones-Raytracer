@@ -11,6 +11,7 @@
 #include "RGBColor.hpp"
 
 // Precompute commonly used values.
+const float ONE = 1.0;
 const float PI = 3.1415926535897932384;
 const float TWO_PI = 6.2831853071795864769;
 const float PI_ON_180 = 0.0174532925199432957;

@@ -17,20 +17,30 @@
 #include "ViewPlane.hpp"
 #include "../geometry/Geometry.hpp"
 #include "../samplers/Sampler.hpp"
+#include "../lights/Light.hpp"
+#include "../AccStr/Acceleration.hpp"
+#include "../tracers/Tracer.hpp"
 
 class Camera;
 class Geometry;
 class Ray;
 class Sampler;
 class ShadeInfo;
+class Light;
+class Material;
+class Acceleration;
+class Tracer;
 
 class World {
 public:
   ViewPlane vplane;
   RGBColor bg_color;
   std::vector<Geometry *> geometry;
+  std::vector<Light *> lights;
   Camera *camera_ptr;
   Sampler *sampler_ptr;
+  Acceleration *acceleration_ptr;
+  Tracer* tracer;
 
 public:
   // Constructors.
@@ -41,7 +51,10 @@ public:
 
   // Add to the scene.
   void add_geometry(Geometry *geom_ptr);
+  void add_light(Light * light_ptr);
   void set_camera(Camera *c_ptr);
+  void set_acceleration(Acceleration* a_ptr);
+
 
   // Build scene - add all geometry, materials, lights, viewplane, camera,
   // samplers, and acceleration structures

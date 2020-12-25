@@ -12,6 +12,7 @@
 #include "Point3D.hpp"
 #include "Ray.hpp"
 #include "Vector3D.hpp"
+#include "../world/World.hpp"
 
 class Material;
 class World;

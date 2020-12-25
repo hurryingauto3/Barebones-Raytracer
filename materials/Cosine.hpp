@@ -17,7 +17,10 @@
 
 class Cosine : public Material {
 protected:
-  RGBColor color; // the color of the material.
+    RGBColor color; // the color of the material.
+    float diffusivity;
+    float specularCoeff;
+    float shininess;
 
 public:
   // Constructors.
@@ -25,6 +28,7 @@ public:
   Cosine(float c);                   // set color to (c, c, c).
   Cosine(float r, float g, float b); // set color to (r, g, b).
   Cosine(const RGBColor &c);         // set color to c.
+  Cosine(const RGBColor &c, float diffusivity, float specularCoeff, float shininess);
 
   // Copy constuctor and assignment operator.
   Cosine(const Cosine &other);
@@ -37,5 +41,13 @@ public:
      \theta is the angle between the normal at the hit pont and the ray.
      Assuming unit vectors, cos \theta = dot product of normal and -ray.dir.
   */
-  virtual RGBColor shade(const ShadeInfo &sinfo) const override;
+  virtual RGBColor shade(const ShadeInfo &sinfo, const Light* lightSrc) const override;
+  virtual RGBColor shadeSpecular(const ShadeInfo &sinfo, const Light* lightSrc) const;
+  virtual RGBColor shadeDiffuse(const ShadeInfo &sinfo, const Light* lightSrc) const;
+  virtual RGBColor applyColour(const RGBColor &arrivingLight) const override;
+  virtual RGBColor applyMaxDepthColor(const RGBColor &arrivingLight, const ShadeInfo &sinfo)const override;
+
+  virtual std::vector<Ray> getEmergingRays(const ShadeInfo &sinfo) const override;
+
+  virtual bool lookAheadPhong() = 0;
 };

@@ -81,8 +81,18 @@ bool BBox::hit(const Ray &ray, float &t_enter, float &t_exit) const{
 
 };
 
-void BBox::extend(Geometry* g){};
-void BBox::extend(const BBox& b){};
+void BBox::extend(Geometry* g){
+    this->pmin = min(g->getBBox().pmin, this->pmin);
+    this->pmax = min(g->getBBox().pmax, this->pmax);
+};
+void BBox::extend(const BBox& b){
+    this->pmin = min(b.pmin, this->pmin);
+    this->pmax = min(b.pmax, this->pmax);
+};
+void BBox::extend(const Point3D& p){
+    this->pmin = min(p, this->pmin);
+    this->pmax = min(p, this->pmax);
+};
 
 bool BBox::contains(const Point3D& p){
 
@@ -111,3 +121,12 @@ bool BBox::overlaps(const BBox& b){
 
 };
 
+int BBox::LongestDim(){
+    Vector3D diagonal(this->pmax.x - this->pmin.x, this->pmax.y - this->pmin.y, this->pmax.z - this->pmin.z);
+    return diagonal.LongestDim();
+}
+
+Vector3D BBox::GetDiag(){
+    Vector3D diagonal(this->pmax.x - this->pmin.x, this->pmax.y - this->pmin.y, this->pmax.z - this->pmin.z);
+    return diagonal;
+}

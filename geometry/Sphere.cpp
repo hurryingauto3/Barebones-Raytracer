@@ -32,6 +32,12 @@ bool Sphere::hit(const Ray &ray, float &t, ShadeInfo &s)const{
     double b = ray.d * (ray.o - this->c) * 2;
     double c = (ray.o - this->c) * (ray.o - this->c) - this->r * this->r;
     double discrim = b * b - 4 * a * c;
+
+    if(discrim < 0)
+    {
+        return false;
+    }
+
     double t1 = (-b - sqrt(discrim)) / (2 * a);
     double t2 = (-b + sqrt(discrim)) / (2 * a);
 
@@ -67,3 +73,6 @@ BBox Sphere::getBBox()const{
     return BBox(mini, maxi);
 }
 
+Point3D Sphere::getCentroid() const{
+    return this->c;
+}

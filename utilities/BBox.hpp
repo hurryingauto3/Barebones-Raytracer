@@ -41,13 +41,17 @@ public:
   // Extend this bbox, if necessary, to include g or b.
   void extend(Geometry* g);
   void extend(const BBox& b);
-
+  void extend(const Point3D& p);
   // Does this BBox contain p? True even when p lies on a boundary.
   bool contains(const Point3D& p);
 
   // Does this BBox overlap with g or b?
   bool overlaps(Geometry* g);
   bool overlaps(const BBox& b);
+
+  int LongestDim();
+  Vector3D GetDiag();
+
 };
 
 //Functions to find max and min floats from 3 floats;

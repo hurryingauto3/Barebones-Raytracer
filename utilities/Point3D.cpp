@@ -50,6 +50,17 @@ Point3D Point3D::operator*(const float s) const {
    return Point3D(this->x*s, this->y*s, this->z*s);
 }
 
+float Point3D::operator[](int index) const {
+   if(index == 0)
+      return this->x;
+   else if (index == 1)
+      return this->y;
+   else if (index == 2)
+      return this->z;
+   else
+      return 0;
+}
+
 float Point3D::d_squared(const Point3D& p) const
 {
     return pow((x - p.x),2) + pow((y - p.y),2) + pow((z - p.z),2);

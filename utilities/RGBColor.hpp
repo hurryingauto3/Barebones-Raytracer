@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <vector>
 /**
    This file declares the class RGBColor which represents an RGB color.
 
@@ -48,3 +49,5 @@ public:
 
 // Multiplication by a float.
 RGBColor operator*(const float a, const RGBColor &c);
+RGBColor expertColorSum(std::vector<RGBColor> colorList);
+

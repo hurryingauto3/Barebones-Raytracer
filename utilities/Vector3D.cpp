@@ -101,3 +101,14 @@ Vector3D operator*(const double a, const Vector3D& v)
 {
     return Vector3D(a*v.x, a*v.y, a*v.z);
 }
+
+int Vector3D::LongestDim(){
+   if(this->x > this->y){
+      if (this->x > this->z) return 0;
+      else return 2;
+   }
+   else{
+      if (this->y > this->z) return 1;
+      else return 2;
+   }
+}

@@ -7,6 +7,6 @@
 - Contains a minimal tracer
 ### More Features Branch
 - Contains additional features
--- More lighting 
--- Acceleration Structures [Bounding Volume Heirarchy]
--- More materials
+- More lighting 
+- Acceleration Structures [Bounding Volume Heirarchy]
+- More materials
